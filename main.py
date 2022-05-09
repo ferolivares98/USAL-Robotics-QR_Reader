@@ -1,18 +1,19 @@
 import cv2
 import numpy as np
 
-TOTAL_WIDTH = 800
-TOTAL_HEIGHT = 600
+TOTAL_WIDTH = 640
+TOTAL_HEIGHT = 480
 
 
 def main():
     # Capturamos de la webcam
-    webcam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    webcam = cv2.VideoCapture(0)
     webcam.set(cv2.CAP_PROP_FRAME_WIDTH, TOTAL_WIDTH)
     webcam.set(cv2.CAP_PROP_FRAME_HEIGHT, TOTAL_HEIGHT)
 
     while True:
         _, frame = webcam.read()
+        print(frame)
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
         lower_b = cv2.inRange(hsv, (0, 100, 100), (10, 255, 255))
@@ -31,8 +32,11 @@ def main():
             if area > 16000:
                 print(approx[0][0][0])
                 print(approx[0])
+                # Puntos individuales
                 cv2.drawContours(frame, [approx[0]], 0, (0, 0, 0), 10)
                 cv2.drawContours(frame, [approx[1]], 0, (0, 0, 0), 20)
+                # Contorno entero
+                cv2.drawContours(frame, [approx], 0, (0, 0, 0), 4)
 
         cv2.rectangle(frame, (0, 0), (TOTAL_WIDTH, TOTAL_HEIGHT), (0, 255, 0), 3)
         cv2.rectangle(frame, (int(TOTAL_WIDTH/3), 0), (int((TOTAL_WIDTH/3)*2), TOTAL_HEIGHT), (0, 255, 0), 3)
