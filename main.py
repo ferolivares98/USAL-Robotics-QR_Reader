@@ -28,14 +28,14 @@ def main():
         upper_b = cv2.inRange(hsv, (170, 50, 50), (180, 255, 255))
 
         hsv = cv2.addWeighted(lower_b, 1.0, upper_b, 1.0, 0.0)
-        kernel = np.ones((5, 5), np.uint8)
+        kernel = np.ones((5, 5), np.uint8)  # 5x5
         hsv = cv2.erode(hsv, kernel)
 
         contours, _ = cv2.findContours(hsv, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
         for cnt in contours:
             area = cv2.contourArea(cnt)
-            if area > 16000:
+            if area > 12000:
                 approx = cv2.approxPolyDP(cnt, 0.2 * cv2.arcLength(cnt, True), True)
                 if len(approx) == 2:
                     cv2.drawContours(frame, [approx], 0, (0, 0, 0), 5)
@@ -70,7 +70,7 @@ def calculo_pos(puntos, pos, area):
             and puntos[1][0][0] > X_IZQ and puntos[1][0][1] > Y_ARRIBA \
             and puntos[0][0][0] < X_DER and puntos[0][0][1] < Y_ABAJO \
             and puntos[1][0][0] < X_DER and puntos[1][0][1] < Y_ABAJO:
-        if area < 24000:
+        if area < 25000:
             if pos != 10:
                 print("Avanzar hacia adelante.")
                 separador_inst()
@@ -139,12 +139,11 @@ def calculo_pos(puntos, pos, area):
             return 9
         # Derecha.
         else:
-            if pos != 8:
+            if pos != 6:
                 comprobar_area(area)
                 print("Avanzar hacia la derecha.")
                 separador_inst()
-            return 8
-
+            return 6
     return 0
 
 
