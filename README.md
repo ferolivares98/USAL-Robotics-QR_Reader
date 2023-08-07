@@ -1,6 +1,6 @@
-# VisionQRBasic
+# QR Reader
 
-Ejercicio de visión para la asignatura de "Robótica".
+QR Code Reader that indicates to the user the correct way in which to position the image.
 
 Basic
 ![Screenshot_1](https://user-images.githubusercontent.com/49880146/213934748-a3fa7ac5-1d10-46ea-93da-a275a469304b.jpg)
